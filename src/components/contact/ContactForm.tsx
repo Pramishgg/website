@@ -24,8 +24,19 @@ const ContactForm: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-email`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send email');
+      }
+
       setFormStatus('success');
       setFormData({
         name: '',
@@ -34,11 +45,11 @@ const ContactForm: React.FC = () => {
         message: '',
       });
       
-      // Reset status after 5 seconds
       setTimeout(() => {
         setFormStatus(null);
       }, 5000);
     } catch (error) {
+      console.error('Error sending email:', error);
       setFormStatus('error');
       setTimeout(() => {
         setFormStatus(null);
