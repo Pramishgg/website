@@ -37,7 +37,7 @@ const About: React.FC = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Hello! I'm <span className="gradient-text font-bold">Pramish</span>, a versatile developer and technologist passionate about crafting innovative digital solutions. With a strong foundation in web development and UI/UX design, I create engaging and user-friendly experiences.
+            Hello! I'm <span className="gradient-text font-bold">Pramish</span>, an AI-focused journalist with a passion for uncovering and analyzing the latest developments in artificial intelligence and their impact on journalism, media, and society at large.
           </motion.p>
           
           <motion.p 
@@ -47,7 +47,7 @@ const About: React.FC = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            My expertise extends to building intelligent automation systems and cutting-edge AI agents that solve real-world problems. I'm driven by the challenge of transforming complex concepts into functional, intuitive applications that deliver exceptional value to users.
+            My work focuses on investigating emerging AI technologies, exploring ethical considerations in AI development, and examining how artificial intelligence is reshaping the media landscape. I combine deep technical understanding with clear, accessible writing to make complex AI topics understandable to diverse audiences.
           </motion.p>
           
           <motion.p 
@@ -57,7 +57,7 @@ const About: React.FC = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.6, duration: 0.6 }}
           >
-            I'm always eager to collaborate on meaningful projects and continuously grow as a tech professional. Let's connect and explore how we can collaborate!
+            I contribute to leading technology publications and maintain a dedicated platform for in-depth AI journalism. Let's connect and explore the fascinating world of artificial intelligence together!
           </motion.p>
 
           <motion.div

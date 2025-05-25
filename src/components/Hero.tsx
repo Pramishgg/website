@@ -40,7 +40,7 @@ const Hero: React.FC = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.6 }}
             >
-              A passionate developer specializing in Web Development, UI Design, Automation, and AI Agent solutions. I transform complex problems into something amazing together.
+              An AI-focused journalist exploring the intersection of artificial intelligence and modern media. I specialize in investigating emerging AI trends, ethical implications, and their impact on society.
             </motion.p>
             <motion.div 
               className="flex flex-wrap gap-6"
@@ -53,7 +53,7 @@ const Hero: React.FC = () => {
                   primary
                   className="flex items-center gap-3 text-lg px-8 py-4 relative overflow-hidden group"
                 >
-                  <span className="relative z-10">View My Work</span>
+                  <span className="relative z-10">Read My Articles</span>
                   <Eye size={20} className="relative z-10" />
                   <motion.div 
                     className="absolute inset-0 bg-primary-600"
@@ -76,7 +76,7 @@ const Hero: React.FC = () => {
                     secondary
                     className="flex items-center gap-3 text-lg px-8 py-4"
                   >
-                    More About Me <ArrowRight size={20} />
+                    Get in Touch <ArrowRight size={20} />
                   </Button>
                 </motion.div>
               </Link>
@@ -96,8 +96,8 @@ const Hero: React.FC = () => {
               style={{ transformStyle: 'preserve-3d' }}
             >
               <motion.img
-                src="https://images.pexels.com/photos/3799786/pexels-photo-3799786.jpeg?auto=compress&cs=tinysrgb&w=600"
-                alt="Pramish"
+                src="https://images.pexels.com/photos/3059747/pexels-photo-3059747.jpeg"
+                alt="AI Journalism"
                 className="w-full h-full object-cover"
                 initial={{ scale: 1.2 }}
                 animate={{ scale: 1 }}
