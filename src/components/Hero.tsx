@@ -40,7 +40,7 @@ const Hero: React.FC = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.6 }}
             >
-              An AI-focused journalist exploring the intersection of artificial intelligence and modern media. I specialize in investigating emerging AI trends, ethical implications, and their impact on society.
+              An AI-focused journalist exploring the intersection of artificial intelligence. I specialize in investigating emerging AI trends, ethical implications, and their impact on society.
             </motion.p>
             <motion.div 
               className="flex flex-wrap gap-6"
