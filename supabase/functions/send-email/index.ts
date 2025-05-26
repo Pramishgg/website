@@ -1,5 +1,5 @@
-import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
-import { SmtpClient } from 'npm:nodemailer';
+import { createClient } from 'npm:@supabase/supabase-js@2.39.7';
+import { Resend } from 'npm:resend@3.2.0';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -7,7 +7,9 @@ const corsHeaders = {
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 
-serve(async (req) => {
+const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
+
+Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -23,23 +25,11 @@ serve(async (req) => {
       );
     }
 
-    // Initialize SMTP client
-    const smtp = new SmtpClient({
-      host: Deno.env.get('SMTP_HOST'),
-      port: Number(Deno.env.get('SMTP_PORT')),
-      secure: true,
-      auth: {
-        user: Deno.env.get('SMTP_USER'),
-        pass: Deno.env.get('SMTP_PASS'),
-      },
-    });
-
-    // Send email
-    await smtp.sendMail({
-      from: Deno.env.get('SMTP_FROM'),
+    // Send email using Resend
+    const { data, error } = await resend.emails.send({
+      from: 'Portfolio Contact <onboarding@resend.dev>',
       to: 'pramishgelal@gmail.com',
-      subject: `Contact Form: ${subject}`,
-      text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+      subject: `Portfolio Contact: ${subject}`,
       html: `
         <h2>New Contact Form Submission</h2>
         <p><strong>Name:</strong> ${name}</p>
@@ -50,8 +40,12 @@ serve(async (req) => {
       `,
     });
 
+    if (error) {
+      throw error;
+    }
+
     return new Response(
-      JSON.stringify({ message: 'Email sent successfully' }),
+      JSON.stringify({ message: 'Email sent successfully', data }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
