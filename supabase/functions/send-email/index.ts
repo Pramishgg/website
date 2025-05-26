@@ -1,4 +1,3 @@
-import { createClient } from 'npm:@supabase/supabase-js@2.39.7';
 import { Resend } from 'npm:resend@3.2.0';
 
 const corsHeaders = {
@@ -27,8 +26,9 @@ Deno.serve(async (req) => {
 
     // Send email using Resend
     const { data, error } = await resend.emails.send({
-      from: 'Portfolio Contact <onboarding@resend.dev>',
-      to: 'pramishgelal@gmail.com',
+      from: 'Pramish Portfolio <onboarding@resend.dev>',
+      to: ['pramishgelal@gmail.com'],
+      reply_to: email,
       subject: `Portfolio Contact: ${subject}`,
       html: `
         <h2>New Contact Form Submission</h2>
@@ -41,6 +41,7 @@ Deno.serve(async (req) => {
     });
 
     if (error) {
+      console.error('Resend API error:', error);
       throw error;
     }
 
@@ -51,7 +52,10 @@ Deno.serve(async (req) => {
   } catch (error) {
     console.error('Error sending email:', error);
     return new Response(
-      JSON.stringify({ error: 'Failed to send email' }),
+      JSON.stringify({ 
+        error: 'Failed to send email',
+        details: error instanceof Error ? error.message : 'Unknown error'
+      }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
