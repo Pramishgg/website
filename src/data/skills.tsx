@@ -1,5 +1,5 @@
 import React from 'react';
-import { Newspaper, PenTool, BrainCircuit, Presentation, MessageSquare } from 'lucide-react';
+import { PenTool, BrainCircuit, Presentation, MessageSquare } from 'lucide-react';
 import { SkillVariant } from '../components/skills/SkillCategory';
 
 interface Skill {
@@ -16,20 +16,6 @@ interface SkillCategory {
 }
 
 export const skillsData: SkillCategory[] = [
-  {
-    id: 'journalism',
-    title: 'Journalism',
-    icon: <Newspaper size={24} />,
-    variant: 'web',
-    skills: [
-      { id: 'investigative', name: 'Investigative Journalism' },
-      { id: 'tech-writing', name: 'Technology Writing' },
-      { id: 'data-journalism', name: 'Data Journalism' },
-      { id: 'feature-writing', name: 'Feature Writing' },
-      { id: 'news-analysis', name: 'News Analysis' },
-      { id: 'editorial', name: 'Editorial Writing' },
-    ],
-  },
   {
     id: 'content-creation',
     title: 'Content Creation',
