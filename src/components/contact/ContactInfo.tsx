@@ -23,7 +23,7 @@ const contactMethods = [
     id: 'github',
     title: 'GitHub',
     icon: <Github size={24} />,
-    value: 'github.com/pramish',
+    value: 'github.com/pramishgg',
     action: 'Follow on GitHub',
     link: 'https://github.com/pramishgg',
   },
