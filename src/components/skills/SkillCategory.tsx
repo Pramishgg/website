@@ -13,7 +13,7 @@ interface SkillCategoryProps {
 
 const SkillCategory: React.FC<SkillCategoryProps> = ({ title, icon, skills, variant }) => {
   return (
-    <div className="relative">
+    <>
       <div className="flex items-center mb-6">
         <div className="flex items-center justify-center w-12 h-12 rounded-full bg-white shadow-md text-primary-500 mr-4">
           {icon}
@@ -25,7 +25,7 @@ const SkillCategory: React.FC<SkillCategoryProps> = ({ title, icon, skills, vari
           <SkillTag key={skill.id} name={skill.name} variant={variant} />
         ))}
       </div>
-    </div>
+    </>
   );
 };
 
