@@ -26,7 +26,9 @@ const Header: React.FC = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/10 backdrop-blur-sm shadow-sm py-3 mx-6 mt-6 rounded-3xl' : 'bg-transparent py-5'
+        isScrolled 
+          ? 'bg-white/80 backdrop-blur-lg shadow-sm py-3 mx-0 sm:mx-4 md:mx-6 mt-0 sm:mt-4 md:mt-6 rounded-none sm:rounded-2xl md:rounded-3xl' 
+          : 'bg-transparent py-4 sm:py-5'
       }`}
     >
       <div className="container mx-auto px-4 md:px-6 flex justify-between items-center">
@@ -54,7 +56,7 @@ const Header: React.FC = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className={`md:hidden ${isScrolled ? 'text-gray-800' : 'text-gray-900'}`}
+          className={`md:hidden p-2 rounded-lg ${isScrolled ? 'text-gray-800 hover:bg-gray-100' : 'text-gray-900 hover:bg-white/10'}`}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
         >
@@ -64,8 +66,8 @@ const Header: React.FC = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white/20 backdrop-blur-lg shadow-lg py-4 px-4 absolute top-full left-4 right-4 mt-4 rounded-2xl animate-fade-in">
-          <nav className="flex flex-col space-y-4">
+        <div className="md:hidden bg-white/95 backdrop-blur-lg shadow-lg py-4 px-4 absolute top-full left-0 right-0 animate-slide-down">
+          <nav className="flex flex-col space-y-2">
             {navItems.map((item) => (
               <Link
                 key={item.name}
@@ -74,8 +76,8 @@ const Header: React.FC = () => {
                 smooth={true}
                 offset={-70}
                 duration={500}
-                className="text-gray-800 hover:text-primary-500 font-medium py-2 cursor-pointer transition-colors"
-                activeClass="text-primary-500"
+                className="text-gray-800 hover:text-primary-500 hover:bg-gray-50 font-medium py-3 px-4 rounded-lg cursor-pointer transition-colors"
+                activeClass="text-primary-500 bg-primary-50"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {item.name}
