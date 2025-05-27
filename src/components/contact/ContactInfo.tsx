@@ -7,9 +7,9 @@ const contactMethods = [
     id: 'email',
     title: 'Email',
     icon: <Mail size={24} />,
-    value: 'pramishgelal@gmail.com',
+    value: 'pramishgelal2@gmail.com',
     action: 'Send an Email',
-    link: 'pramishgelal@gmail.com',
+    link: 'https://mail.google.com/pramishgelal2',
   },
   {
     id: 'linkedin',
