@@ -33,14 +33,31 @@
   animation: slide-down 0.2s ease-out;
 }
 
-/* Improve touch interactions on mobile */
-@media (hover: none) {
-  .hover\:scale-105:hover {
-    transform: none;
+/* Mobile-optimized animations */
+@media (max-width: 768px) {
+  .motion-safe {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    -webkit-font-smoothing: antialiased;
   }
   
-  .hover\:shadow-lg:hover {
-    box-shadow: none;
+  /* Reduce animation duration on mobile */
+  .animate-slide-down {
+    animation-duration: 0.15s;
+  }
+  
+  /* Disable hover effects on touch devices */
+  .hover\:scale-105:hover,
+  .hover\:scale-110:hover,
+  .hover\:rotate-3:hover {
+    transform: none !important;
+    transition: none !important;
+  }
+  
+  /* Optimize touch interactions */
+  .touch-action-manipulation {
+    touch-action: manipulation;
   }
 }
 

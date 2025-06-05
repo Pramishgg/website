@@ -10,28 +10,26 @@ const Hero: React.FC = () => {
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl">
         <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8 md:gap-12 lg:gap-20">
           <motion.div
-            className="w-full md:w-3/5 lg:w-1/2 text-center md:text-left"
-            initial={{ opacity: 0, x: -50 }}
+            className="w-full md:w-3/5 lg:w-1/2 text-center md:text-left motion-safe"
+            initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-20%" }}
             transition={{ 
-              duration: 0.6,
-              type: "spring",
-              damping: 20
+              duration: 0.4,
+              ease: "easeOut"
             }}
           >
             <motion.h1 
               className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
+              transition={{ delay: 0.1, duration: 0.4 }}
             >
               Hi, I'm <motion.span 
                 className="text-primary-500"
                 whileHover={{ 
-                  scale: 1.1,
-                  rotate: [0, 5, -5, 0],
-                  transition: { duration: 0.3 }
+                  scale: 1.05,
+                  transition: { duration: 0.2 }
                 }}
               >Pramish</motion.span>
             </motion.h1>
@@ -39,33 +37,26 @@ const Hero: React.FC = () => {
               className="text-lg sm:text-xl lg:text-2xl text-gray-700 mb-8 md:mb-10"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
+              transition={{ delay: 0.2, duration: 0.4 }}
             >
               An AI-focused journalist exploring the intersection of artificial intelligence. I specialize in investigating emerging AI trends, ethical implications, and their impact on society.
             </motion.p>
             <motion.div 
-              className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center md:justify-start"
-              initial={{ opacity: 0, y: 20 }}
+              className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center md:justify-start touch-action-manipulation"
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.6 }}
+              transition={{ delay: 0.3, duration: 0.4 }}
             >
               <motion.div 
-                whileHover={{ scale: 1.05 }} 
-                whileTap={{ scale: 0.95 }}
+                whileTap={{ scale: 0.98 }}
                 className="w-full sm:w-auto"
               >
                 <Button 
                   primary
-                  className="w-full sm:w-auto flex items-center justify-center gap-3 text-lg px-8 py-4 relative overflow-hidden group"
+                  className="w-full sm:w-auto flex items-center justify-center gap-3 text-lg px-8 py-4"
                 >
-                  <span className="relative z-10">Read My Articles</span>
-                  <Eye size={20} className="relative z-10" />
-                  <motion.div 
-                    className="absolute inset-0 bg-primary-600"
-                    initial={{ x: "100%" }}
-                    whileHover={{ x: 0 }}
-                    transition={{ duration: 0.3 }}
-                  />
+                  <span>Read My Articles</span>
+                  <Eye size={20} />
                 </Button>
               </motion.div>
               
@@ -78,8 +69,7 @@ const Hero: React.FC = () => {
                 className="w-full sm:w-auto"
               >
                 <motion.div 
-                  whileHover={{ scale: 1.05 }} 
-                  whileTap={{ scale: 0.95 }}
+                  whileTap={{ scale: 0.98 }}
                   className="w-full"
                 >
                   <Button 
@@ -94,30 +84,23 @@ const Hero: React.FC = () => {
           </motion.div>
           
           <motion.div
-            className="w-full md:w-2/5 lg:w-1/2 flex justify-center perspective-1000 mb-8 md:mb-0"
-            initial={{ opacity: 0, rotateY: -30 }}
-            animate={{ opacity: 1, rotateY: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            className="w-full md:w-2/5 lg:w-1/2 flex justify-center perspective-1000 mb-8 md:mb-0 motion-safe"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4 }}
           >
             <motion.div 
               className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-8 border-primary-100"
-              whileHover={{ scale: 1.05, rotateY: 10 }}
-              transition={{ duration: 0.4 }}
-              style={{ transformStyle: 'preserve-3d' }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.2 }}
             >
               <motion.img
                 src="https://images.pexels.com/photos/3059747/pexels-photo-3059747.jpeg"
                 alt="AI Journalism"
                 className="w-full h-full object-cover"
-                initial={{ scale: 1.2 }}
+                initial={{ scale: 1.1 }}
                 animate={{ scale: 1 }}
-                transition={{ duration: 0.6 }}
-              />
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-tr from-primary-500/20 to-transparent"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
+                transition={{ duration: 0.4 }}
               />
             </motion.div>
           </motion.div>
