@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import SectionTitle from './ui/SectionTitle';
 import ContactInfo from './contact/ContactInfo';
+import ContactForm from './contact/ContactForm';
 
 const Contact: React.FC = () => {
   return (
@@ -54,12 +55,28 @@ const Contact: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Connect with me on social media to stay updated with my latest work and insights into AI journalism and technology!
+            I'm always open to discussing new projects, creative ideas, or opportunities to be part of something great. Feel free to reach out through any of these channels!
           </motion.p>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 mb-20">
             <ContactInfo />
           </div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="max-w-3xl mx-auto bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 lg:p-12 relative"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-accent-500/5 rounded-2xl" />
+            <div className="relative">
+              <h3 className="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-primary-500 to-accent-500 bg-clip-text text-transparent">
+                Ready to bring your ideas to life?
+              </h3>
+              <ContactForm />
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
