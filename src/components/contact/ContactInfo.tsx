@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Linkedin, Github } from 'lucide-react';
+import { Mail, Linkedin, Github, Instagram } from 'lucide-react';
 
 const contactMethods = [
   {
@@ -26,6 +26,14 @@ const contactMethods = [
     value: 'github.com/pramishgg',
     action: 'Follow on GitHub',
     link: 'https://github.com/pramishgg',
+  },
+  {
+    id: 'instagram',
+    title: 'Instagram',
+    icon: <Instagram size={24} />,
+    value: 'instagram.com/pramish_gg',
+    action: 'Follow on Instagram',
+    link: 'https://instagram.com/pramish_gg',
   },
 ];
 
