@@ -4,14 +4,6 @@ import { Mail, Linkedin, Github, Instagram } from 'lucide-react';
 
 const contactMethods = [
   {
-    id: 'email',
-    title: 'Email',
-    icon: <Mail size={24} />,
-    value: 'pramishgelal2@gmail.com',
-    action: 'Send an Email',
-    link: 'https://mail.google.com',
-  },
-  {
     id: 'linkedin',
     title: 'LinkedIn',
     icon: <Linkedin size={24} />,
