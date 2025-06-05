@@ -50,9 +50,6 @@ const ContactInfo: React.FC = () => {
           whileHover={{ scale: 1.02 }}
           className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg text-center flex flex-col items-center relative group"
         >
-          <motion.div 
-            className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-accent-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" 
-          />
           <div className="relative">
             <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500/10 to-accent-500/10 flex items-center justify-center text-primary-500 mb-4 group-hover:scale-110 transition-transform duration-300">
               {method.icon}
