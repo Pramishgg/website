@@ -59,20 +59,15 @@ const ContactForm: React.FC = () => {
     }
   };
 
-  const inputVariants = {
-    focus: { scale: 1.02, transition: { duration: 0.2 } },
-  };
+  const isMobile = window.innerWidth < 768;
   
   return (
-    <motion.form 
+    <form 
       onSubmit={handleSubmit}
-      className="space-y-6"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
+      className="space-y-4 md:space-y-6"
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <motion.div variants={inputVariants} whileFocus="focus">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+        <div>
           <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
             Full Name
           </label>
@@ -83,12 +78,12 @@ const ContactForm: React.FC = () => {
             value={formData.name}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 bg-white/50 backdrop-blur-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-300 focus:border-primary-500 outline-none transition-all duration-300"
+            className="w-full px-3 md:px-4 py-2 md:py-3 bg-white/50 backdrop-blur-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-300 focus:border-primary-500 outline-none transition-all duration-300 touch-optimized"
             placeholder="John Doe"
           />
-        </motion.div>
+        </div>
         
-        <motion.div variants={inputVariants} whileFocus="focus">
+        <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
             Email Address
           </label>
@@ -99,13 +94,13 @@ const ContactForm: React.FC = () => {
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 bg-white/50 backdrop-blur-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-300 focus:border-primary-500 outline-none transition-all duration-300"
+            className="w-full px-3 md:px-4 py-2 md:py-3 bg-white/50 backdrop-blur-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-300 focus:border-primary-500 outline-none transition-all duration-300 touch-optimized"
             placeholder="you@example.com"
           />
-        </motion.div>
+        </div>
       </div>
       
-      <motion.div variants={inputVariants} whileFocus="focus">
+      <div>
         <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
           Subject
         </label>
@@ -116,12 +111,12 @@ const ContactForm: React.FC = () => {
           value={formData.subject}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 bg-white/50 backdrop-blur-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-300 focus:border-primary-500 outline-none transition-all duration-300"
+          className="w-full px-3 md:px-4 py-2 md:py-3 bg-white/50 backdrop-blur-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-300 focus:border-primary-500 outline-none transition-all duration-300 touch-optimized"
           placeholder="Project Inquiry"
         />
-      </motion.div>
+      </div>
       
-      <motion.div variants={inputVariants} whileFocus="focus">
+      <div>
         <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
           Message
         </label>
@@ -131,27 +126,23 @@ const ContactForm: React.FC = () => {
           value={formData.message}
           onChange={handleChange}
           required
-          rows={5}
-          className="w-full px-4 py-3 bg-white/50 backdrop-blur-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-300 focus:border-primary-500 outline-none transition-all duration-300 resize-none"
+          rows={4}
+          className="w-full px-3 md:px-4 py-2 md:py-3 bg-white/50 backdrop-blur-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-300 focus:border-primary-500 outline-none transition-all duration-300 resize-none touch-optimized"
           placeholder="Your detailed message here..."
         ></textarea>
-      </motion.div>
+      </div>
       
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-      >
+      <div>
         <Button
           type="submit"
           primary
-          className="w-full flex items-center justify-center gap-2 py-4"
+          className="w-full flex items-center justify-center gap-2 py-3 md:py-4"
           onClick={() => {}}
         >
           {isSubmitting ? (
             <>
               <motion.div
-                className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                className="w-4 h-4 md:w-5 md:h-5 border-2 border-white border-t-transparent rounded-full"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
               />
@@ -160,7 +151,7 @@ const ContactForm: React.FC = () => {
           ) : (
             <>
               <span>Send Message</span>
-              <Send size={18} />
+              <Send size={16} />
             </>
           )}
         </Button>
@@ -175,19 +166,19 @@ const ContactForm: React.FC = () => {
           className="mt-4"
         >
           {formStatus === 'success' && (
-            <p className="text-center text-green-600 bg-green-50 py-3 px-4 rounded-xl">
+            <p className="text-center text-green-600 bg-green-50 py-2 md:py-3 px-4 rounded-xl text-sm md:text-base">
               Your message has been sent successfully! I'll get back to you soon.
             </p>
           )}
           
           {formStatus === 'error' && (
-            <p className="text-center text-red-600 bg-red-50 py-3 px-4 rounded-xl">
+            <p className="text-center text-red-600 bg-red-50 py-2 md:py-3 px-4 rounded-xl text-sm md:text-base">
               There was an error sending your message. Please try again.
             </p>
           )}
         </motion.div>
-      </motion.div>
-    </motion.form>
+      </div>
+    </form>
   );
 };
 

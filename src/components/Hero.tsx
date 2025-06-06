@@ -5,60 +5,68 @@ import { ArrowRight, Eye } from 'lucide-react';
 import Button from './ui/Button';
 
 const Hero: React.FC = () => {
+  // Simplified animations for mobile
+  const isMobile = window.innerWidth < 768;
+  
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: isMobile ? 0.3 : 0.6,
+        staggerChildren: isMobile ? 0.1 : 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: isMobile ? 10 : 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: isMobile ? 0.3 : 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
-    <section id="hero" className="min-h-screen pt-24 pb-16 md:pt-32 md:pb-20 lg:pt-40 lg:pb-32 overflow-hidden">
+    <section id="hero" className="min-h-screen pt-20 pb-12 md:pt-32 md:pb-20 lg:pt-40 lg:pb-32 overflow-hidden">
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl">
-        <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8 md:gap-12 lg:gap-20">
+        <motion.div
+          className="flex flex-col-reverse md:flex-row items-center justify-between gap-6 md:gap-12 lg:gap-20"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           <motion.div
-            className="w-full md:w-3/5 lg:w-1/2 text-center md:text-left motion-safe"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-20%" }}
-            transition={{ 
-              duration: 0.4,
-              ease: "easeOut"
-            }}
+            className="w-full md:w-3/5 lg:w-1/2 text-center md:text-left gpu-accelerated"
+            variants={itemVariants}
           >
             <motion.h1 
-              className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.4 }}
+              className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 md:mb-6"
+              variants={itemVariants}
             >
-              Hi, I'm <motion.span 
-                className="text-primary-500"
-                whileHover={{ 
-                  scale: 1.05,
-                  transition: { duration: 0.2 }
-                }}
-              >Pramish</motion.span>
+              Hi, I'm <span className="text-primary-500">Pramish</span>
             </motion.h1>
             <motion.p 
-              className="text-lg sm:text-xl lg:text-2xl text-gray-700 mb-8 md:mb-10"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.4 }}
+              className="text-base sm:text-lg lg:text-xl text-gray-700 mb-6 md:mb-8"
+              variants={itemVariants}
             >
               An AI-focused journalist exploring the intersection of artificial intelligence. I specialize in investigating emerging AI trends, ethical implications, and their impact on society.
             </motion.p>
             <motion.div 
-              className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center md:justify-start touch-action-manipulation"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.4 }}
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start touch-optimized"
+              variants={itemVariants}
             >
-              <motion.div 
-                whileTap={{ scale: 0.98 }}
-                className="w-full sm:w-auto"
+              <Button 
+                primary
+                className="w-full sm:w-auto flex items-center justify-center gap-2 text-base px-6 py-3"
               >
-                <Button 
-                  primary
-                  className="w-full sm:w-auto flex items-center justify-center gap-3 text-lg px-8 py-4"
-                >
-                  <span>Read My Articles</span>
-                  <Eye size={20} />
-                </Button>
-              </motion.div>
+                <span>Read My Articles</span>
+                <Eye size={18} />
+              </Button>
               
               <Link
                 to="contact"
@@ -68,43 +76,31 @@ const Hero: React.FC = () => {
                 duration={500}
                 className="w-full sm:w-auto"
               >
-                <motion.div 
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full"
+                <Button 
+                  secondary
+                  className="w-full flex items-center justify-center gap-2 text-base px-6 py-3"
                 >
-                  <Button 
-                    secondary
-                    className="w-full flex items-center justify-center gap-3 text-lg px-8 py-4"
-                  >
-                    Get in Touch <ArrowRight size={20} />
-                  </Button>
-                </motion.div>
+                  Get in Touch <ArrowRight size={18} />
+                </Button>
               </Link>
             </motion.div>
           </motion.div>
           
           <motion.div
-            className="w-full md:w-2/5 lg:w-1/2 flex justify-center perspective-1000 mb-8 md:mb-0 motion-safe"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.4 }}
+            className="w-full md:w-2/5 lg:w-1/2 flex justify-center mb-6 md:mb-0 gpu-accelerated"
+            variants={itemVariants}
           >
-            <motion.div 
-              className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-8 border-primary-100"
-              whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.2 }}
-            >
-              <motion.img
+            <div className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 md:border-8 border-primary-100">
+              <img
                 src="https://images.pexels.com/photos/3059747/pexels-photo-3059747.jpeg"
                 alt="AI Journalism"
                 className="w-full h-full object-cover"
-                initial={{ scale: 1.1 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.4 }}
+                loading="eager"
+                decoding="async"
               />
-            </motion.div>
+            </div>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

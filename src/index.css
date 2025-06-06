@@ -10,6 +10,14 @@
   .preserve-3d {
     transform-style: preserve-3d;
   }
+  
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
 
 .gradient-text {
@@ -21,7 +29,7 @@
 @keyframes slide-down {
   from {
     opacity: 0;
-    transform: translateY(-1rem);
+    transform: translateY(-0.5rem);
   }
   to {
     opacity: 1;
@@ -33,31 +41,42 @@
   animation: slide-down 0.2s ease-out;
 }
 
-/* Mobile-optimized animations */
+/* Mobile-first optimizations */
 @media (max-width: 768px) {
-  .motion-safe {
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-    transform: translateZ(0);
-    -webkit-font-smoothing: antialiased;
+  /* Disable complex animations on mobile */
+  .mobile-simple * {
+    animation-duration: 0.2s !important;
+    transition-duration: 0.2s !important;
   }
   
-  /* Reduce animation duration on mobile */
-  .animate-slide-down {
-    animation-duration: 0.15s;
+  /* Optimize touch interactions */
+  .touch-optimized {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  /* Reduce motion for better performance */
+  .motion-reduce {
+    animation: none !important;
+    transition: none !important;
   }
   
   /* Disable hover effects on touch devices */
   .hover\:scale-105:hover,
   .hover\:scale-110:hover,
-  .hover\:rotate-3:hover {
+  .hover\:rotate-3:hover,
+  .hover\:shadow-xl:hover {
     transform: none !important;
-    transition: none !important;
+    box-shadow: none !important;
   }
   
-  /* Optimize touch interactions */
-  .touch-action-manipulation {
-    touch-action: manipulation;
+  /* Optimize scrolling */
+  .scroll-smooth {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
   }
 }
 
@@ -69,4 +88,16 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Performance optimizations */
+img {
+  content-visibility: auto;
+  contain-intrinsic-size: 300px 200px;
+}
+
+/* Optimize font loading */
+@font-face {
+  font-family: 'Inter';
+  font-display: swap;
 }

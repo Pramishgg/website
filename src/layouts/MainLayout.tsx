@@ -8,9 +8,9 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-secondary-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-secondary-50 to-white scroll-smooth">
       <Header />
-      <main>{children}</main>
+      <main className="gpu-accelerated">{children}</main>
       <Footer />
     </div>
   );
