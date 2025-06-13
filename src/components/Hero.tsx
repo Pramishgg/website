@@ -92,8 +92,8 @@ const Hero: React.FC = () => {
           >
             <div className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 md:border-8 border-primary-100">
               <img
-                src="https://images.pexels.com/photos/3059747/pexels-photo-3059747.jpeg"
-                alt="AI Journalism"
+                src="/logo.png"
+                alt="Pramish Logo"
                 className="w-full h-full object-cover"
                 loading="eager"
                 decoding="async"
