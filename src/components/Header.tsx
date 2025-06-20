@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-scroll';
 import { Menu, X } from 'lucide-react';
 import Logo from './ui/Logo';
-import GooeyNav from './ui/GooeyNav';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeNavIndex, setActiveNavIndex] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,48 +17,46 @@ const Header: React.FC = () => {
   }, []);
 
   const navItems = [
-    { name: 'Home', to: 'hero', label: 'Home', href: '#hero' },
-    { name: 'About', to: 'about', label: 'About', href: '#about' },
-    { name: 'Projects', to: 'projects', label: 'Projects', href: '#projects' },
-    { name: 'Contact', to: 'contact', label: 'Contact', href: '#contact' },
+    { name: 'Home', to: 'hero' },
+    { name: 'About', to: 'about' },
+    { name: 'Projects', to: 'projects' },
+    { name: 'Contact', to: 'contact' },
   ];
-
-  const handleGooeyNavClick = (index: number, item: any) => {
-    setActiveNavIndex(index);
-    // Scroll to the section
-    const element = document.getElementById(item.href.replace('#', ''));
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 gpu-accelerated ${
         isScrolled 
-          ? 'bg-gradient-to-r from-primary-600/95 to-primary-500/95 backdrop-blur-md shadow-lg py-2 md:py-3 mx-0 sm:mx-4 md:mx-6 mt-0 sm:mt-4 md:mt-6 rounded-none sm:rounded-2xl md:rounded-3xl' 
-          : 'bg-gradient-to-r from-primary-600/90 to-primary-500/90 backdrop-blur-sm py-3 md:py-4 lg:py-5'
+          ? 'bg-white/90 backdrop-blur-md shadow-sm py-2 md:py-3 mx-0 sm:mx-4 md:mx-6 mt-0 sm:mt-4 md:mt-6 rounded-none sm:rounded-2xl md:rounded-3xl' 
+          : 'bg-transparent py-3 md:py-4 lg:py-5'
       }`}
     >
       <div className="container mx-auto px-4 md:px-6 flex justify-between items-center">
         <Logo />
 
-        {/* Desktop Navigation with GooeyNav */}
-        <div className="hidden md:flex">
-          <GooeyNav
-            items={navItems.map(item => ({ label: item.label, href: item.href }))}
-            initialActiveIndex={activeNavIndex}
-            onItemClick={handleGooeyNavClick}
-            animationTime={500}
-            particleCount={12}
-            particleDistances={[80, 8]}
-            colors={[1, 2, 3, 4]}
-          />
-        </div>
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
+          {navItems.map((item) => (
+            <Link
+              key={item.name}
+              to={item.to}
+              spy={true}
+              smooth={true}
+              offset={-70}
+              duration={500}
+              className={`font-medium cursor-pointer transition-colors touch-optimized ${
+                isScrolled ? 'text-gray-800 hover:text-primary-500' : 'text-gray-900 hover:text-primary-500'
+              }`}
+              activeClass="text-primary-500"
+            >
+              {item.name}
+            </Link>
+          ))}
+        </nav>
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden p-2 rounded-lg touch-optimized text-white hover:bg-white/10"
+          className={`md:hidden p-2 rounded-lg touch-optimized ${isScrolled ? 'text-gray-800 hover:bg-gray-100' : 'text-gray-900 hover:bg-white/10'}`}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
         >
