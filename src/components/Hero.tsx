@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-scroll';
 import { ArrowRight, Eye } from 'lucide-react';
 import Button from './ui/Button';
+import BlurText from './ui/BlurText';
 
 const Hero: React.FC = () => {
   // Simplified animations for mobile
@@ -44,18 +45,20 @@ const Hero: React.FC = () => {
             className="w-full md:w-3/5 lg:w-1/2 text-center md:text-left gpu-accelerated"
             variants={itemVariants}
           >
-            <motion.h1 
+            <BlurText
+              text="Hi, I'm Pramish"
               className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 md:mb-6"
-              variants={itemVariants}
-            >
-              Hi, I'm <span className="text-primary-500">Pramish</span>
-            </motion.h1>
-            <motion.p 
+              delay={100}
+              animateBy="words"
+              direction="top"
+            />
+            <BlurText
+              text="An AI-focused journalist exploring the intersection of artificial intelligence. I specialize in investigating emerging AI trends, ethical implications, and their impact on society."
               className="text-base sm:text-lg lg:text-xl text-gray-700 mb-6 md:mb-8"
-              variants={itemVariants}
-            >
-              An AI-focused journalist exploring the intersection of artificial intelligence. I specialize in investigating emerging AI trends, ethical implications, and their impact on society.
-            </motion.p>
+              delay={80}
+              animateBy="words"
+              direction="bottom"
+            />
             <motion.div 
               className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center md:justify-start touch-optimized"
               variants={itemVariants}

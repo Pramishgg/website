@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import SectionTitle from './ui/SectionTitle';
+import BlurText from './ui/BlurText';
 
 const About: React.FC = () => {
   const isMobile = window.innerWidth < 768;
@@ -50,26 +51,29 @@ const About: React.FC = () => {
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
         >
-          <motion.p 
+          <BlurText
+            text="Hello! I'm Pramish, an AI-focused journalist with a passion for uncovering and analyzing the latest developments in artificial intelligence and their impact on journalism, media, and society at large."
             className="mb-4 md:mb-6 text-lg md:text-xl lg:text-2xl leading-relaxed"
-            variants={itemVariants}
-          >
-            Hello! I'm <span className="gradient-text font-bold">Pramish</span>, an AI-focused journalist with a passion for uncovering and analyzing the latest developments in artificial intelligence and their impact on journalism, media, and society at large.
-          </motion.p>
+            delay={60}
+            animateBy="words"
+            direction="top"
+          />
           
-          <motion.p 
+          <BlurText
+            text="My work focuses on investigating emerging AI technologies, exploring ethical considerations in AI development, and examining how artificial intelligence is reshaping the media landscape. I combine deep technical understanding with clear, accessible writing to make complex AI topics understandable to diverse audiences."
             className="mb-4 md:mb-6 text-lg md:text-xl lg:text-2xl leading-relaxed"
-            variants={itemVariants}
-          >
-            My work focuses on investigating emerging AI technologies, exploring ethical considerations in AI development, and examining how artificial intelligence is reshaping the media landscape. I combine deep technical understanding with clear, accessible writing to make complex AI topics understandable to diverse audiences.
-          </motion.p>
+            delay={60}
+            animateBy="words"
+            direction="top"
+          />
           
-          <motion.p 
+          <BlurText
+            text="I contribute to leading technology publications and maintain a dedicated platform for in-depth AI journalism. Let's connect and explore the fascinating world of artificial intelligence together!"
             className="text-lg md:text-xl lg:text-2xl leading-relaxed"
-            variants={itemVariants}
-          >
-            I contribute to leading technology publications and maintain a dedicated platform for in-depth AI journalism. Let's connect and explore the fascinating world of artificial intelligence together!
-          </motion.p>
+            delay={60}
+            animateBy="words"
+            direction="top"
+          />
         </motion.div>
       </div>
     </section>
