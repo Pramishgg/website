@@ -34,17 +34,37 @@ const ContactForm: React.FC = () => {
         const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
         
         if (supabaseUrl && supabaseAnonKey) {
-          const response = await fetch(`${supabaseUrl}/functions/v1/send-email`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${supabaseAnonKey}`,
-            },
-            body: JSON.stringify(formData),
-          });
+          // Add timeout and better error handling for the fetch request
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+          
+          try {
+            const response = await fetch(`${supabaseUrl}/functions/v1/send-email`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${supabaseAnonKey}`,
+              },
+              body: JSON.stringify(formData),
+              signal: controller.signal,
+            });
 
-          if (!response.ok) {
-            console.warn('Email notification failed, but contact submission was saved successfully');
+            clearTimeout(timeoutId);
+
+            if (!response.ok) {
+              console.warn('Email notification failed, but contact submission was saved successfully');
+            }
+          } catch (fetchError) {
+            clearTimeout(timeoutId);
+            if (fetchError instanceof Error) {
+              if (fetchError.name === 'AbortError') {
+                console.warn('Email notification timed out, but contact submission was saved successfully');
+              } else {
+                console.warn('Email notification failed, but contact submission was saved successfully:', fetchError.message);
+              }
+            } else {
+              console.warn('Email notification failed with unknown error, but contact submission was saved successfully');
+            }
           }
         } else {
           console.warn('Supabase environment variables not configured for email notifications');
