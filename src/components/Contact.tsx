@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import SectionTitle from './ui/SectionTitle';
 import ContactInfo from './contact/ContactInfo';
 import ContactForm from './contact/ContactForm';
-import BlurText from './ui/BlurText';
 
 const Contact: React.FC = () => {
   const isMobile = window.innerWidth < 768;
@@ -55,13 +54,15 @@ const Contact: React.FC = () => {
         </motion.div>
         
         <div className="mt-12 md:mt-16">
-          <BlurText
-            text="I'm always open to discussing new projects, creative ideas, or opportunities to be part of something great. Feel free to reach out through any of these channels!"
+          <motion.p 
             className="text-center text-lg md:text-xl text-gray-700 mb-12 md:mb-16 max-w-3xl mx-auto"
-            delay={80}
-            animateBy="words"
-            direction="top"
-          />
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: isMobile ? 0.3 : 0.6, delay: 0.1 }}
+          >
+            I'm always open to discussing new projects, creative ideas, or opportunities to be part of something great. Feel free to reach out through any of these channels!
+          </motion.p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-16 md:mb-20">
             <ContactInfo />
@@ -76,13 +77,9 @@ const Contact: React.FC = () => {
           >
             <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-accent-500/5 rounded-2xl" />
             <div className="relative">
-              <BlurText
-                text="Ready to bring your ideas to life?"
-                className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center bg-gradient-to-r from-primary-500 to-accent-500 bg-clip-text text-transparent"
-                delay={100}
-                animateBy="words"
-                direction="top"
-              />
+              <h3 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center bg-gradient-to-r from-primary-500 to-accent-500 bg-clip-text text-transparent">
+                Ready to bring your ideas to life?
+              </h3>
               <ContactForm />
             </div>
           </motion.div>
