@@ -25,23 +25,36 @@ const ContactForm: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      // Store in database first
+      // Store in database first - this is the primary action
       await insertContactSubmission(formData);
       
-      // Then send email notification
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-email`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify(formData),
-      });
+      // Try to send email notification, but don't fail if it doesn't work
+      try {
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+        const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+        
+        if (supabaseUrl && supabaseAnonKey) {
+          const response = await fetch(`${supabaseUrl}/functions/v1/send-email`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${supabaseAnonKey}`,
+            },
+            body: JSON.stringify(formData),
+          });
 
-      if (!response.ok) {
-        console.warn('Email notification failed, but data was saved to database');
+          if (!response.ok) {
+            console.warn('Email notification failed, but contact submission was saved successfully');
+          }
+        } else {
+          console.warn('Supabase environment variables not configured for email notifications');
+        }
+      } catch (emailError) {
+        // Email notification failed, but that's okay - the main submission succeeded
+        console.warn('Email notification failed, but contact submission was saved successfully:', emailError);
       }
 
+      // Form submission was successful (data saved to database)
       setFormStatus('success');
       setFormData({
         name: '',
