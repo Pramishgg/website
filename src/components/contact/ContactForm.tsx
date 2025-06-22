@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
 import Button from '../ui/Button';
-import { insertContactSubmission } from '../../lib/supabase';
 
 const ContactForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -25,10 +24,6 @@ const ContactForm: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      // Store in database first
-      await insertContactSubmission(formData);
-      
-      // Then send email notification
       const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-email`, {
         method: 'POST',
         headers: {
@@ -39,7 +34,7 @@ const ContactForm: React.FC = () => {
       });
 
       if (!response.ok) {
-        console.warn('Email notification failed, but data was saved to database');
+        throw new Error('Failed to send email');
       }
 
       setFormStatus('success');
@@ -54,7 +49,7 @@ const ContactForm: React.FC = () => {
         setFormStatus(null);
       }, 5000);
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error('Error sending email:', error);
       setFormStatus('error');
       setTimeout(() => {
         setFormStatus(null);

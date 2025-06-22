@@ -48,14 +48,14 @@ const Hero: React.FC = () => {
             <BlurText
               text="Hi, I'm Pramish"
               className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 md:mb-6"
-              delay={isMobile ? 80 : 100}
+              delay={100}
               animateBy="words"
               direction="top"
             />
             <BlurText
               text="An AI-focused journalist exploring the intersection of artificial intelligence. I specialize in investigating emerging AI trends, ethical implications, and their impact on society."
               className="text-base sm:text-lg lg:text-xl text-gray-700 mb-6 md:mb-8"
-              delay={isMobile ? 60 : 80}
+              delay={80}
               animateBy="words"
               direction="bottom"
             />
