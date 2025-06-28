@@ -52,7 +52,10 @@ const ContactForm: React.FC = () => {
             clearTimeout(timeoutId);
 
             if (!response.ok) {
-              console.warn('Email notification failed, but contact submission was saved successfully');
+              const errorBody = await response.json();
+              console.warn(`Email notification failed with status ${response.status}: ${errorBody.error || response.statusText}. Contact submission was saved successfully.`);
+              // Optionally: set a specific form status for email failure
+              // setFormStatus('email_error');
             }
           } catch (fetchError) {
             clearTimeout(timeoutId);
@@ -60,18 +63,18 @@ const ContactForm: React.FC = () => {
               if (fetchError.name === 'AbortError') {
                 console.warn('Email notification timed out, but contact submission was saved successfully');
               } else {
-                console.warn('Email notification failed, but contact submission was saved successfully:', fetchError.message);
+                console.warn('Email notification failed during fetch, but contact submission was saved successfully:', fetchError.message);
               }
             } else {
-              console.warn('Email notification failed with unknown error, but contact submission was saved successfully');
+              console.warn('Email notification failed with unknown fetch error, but contact submission was saved successfully');
             }
           }
         } else {
-          console.warn('Supabase environment variables not configured for email notifications');
+          console.warn('Supabase environment variables not configured for email notifications. Contact submission was saved successfully.');
         }
       } catch (emailError) {
         // Email notification failed, but that's okay - the main submission succeeded
-        console.warn('Email notification failed, but contact submission was saved successfully:', emailError);
+        console.warn('Email notification failed, but contact submission was saved successfully:', emailError instanceof Error ? emailError.message : emailError);
       }
 
       // Form submission was successful (data saved to database)
@@ -96,8 +99,6 @@ const ContactForm: React.FC = () => {
       setIsSubmitting(false);
     }
   };
-
-  const isMobile = window.innerWidth < 768;
   
   return (
     <form 
