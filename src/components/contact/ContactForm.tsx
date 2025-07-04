@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Send, CheckCircle, AlertCircle } from 'lucide-react';
-import { Button } from '../ui/Button';
+import Button from '../ui/Button';
 import { supabase } from '../../lib/supabase';
 
 interface FormData {
