@@ -1,5 +1,5 @@
 import React from 'react';
-import { PenTool, BrainCircuit, Presentation, MessageSquare } from 'lucide-react';
+import { Brain, Code, Database, Zap } from 'lucide-react';
 import { SkillVariant } from '../components/skills/SkillCategory';
 
 interface Skill {
@@ -17,55 +17,59 @@ interface SkillCategory {
 
 export const skillsData: SkillCategory[] = [
   {
-    id: 'content-creation',
-    title: 'Content Creation',
-    icon: <PenTool size={24} />,
-    variant: 'design',
-    skills: [
-      { id: 'multimedia', name: 'Multimedia Storytelling' },
-      { id: 'data-viz', name: 'Data Visualization' },
-      { id: 'video-production', name: 'Video Production' },
-      { id: 'podcasting', name: 'Podcasting' },
-      { id: 'social-media', name: 'Social Media' },
-    ],
-  },
-  {
-    id: 'ai-expertise',
-    title: 'AI Knowledge',
-    icon: <BrainCircuit size={24} />,
+    id: 'machine-learning',
+    title: 'Machine Learning & AI',
+    icon: <Brain size={24} />,
     variant: 'ai',
     skills: [
-      { id: 'ml-fundamentals', name: 'ML Fundamentals' },
+      { id: 'deep-learning', name: 'Deep Learning' },
+      { id: 'neural-networks', name: 'Neural Networks' },
       { id: 'nlp', name: 'Natural Language Processing' },
-      { id: 'ai-ethics', name: 'AI Ethics' },
-      { id: 'ai-policy', name: 'AI Policy' },
-      { id: 'emerging-tech', name: 'Emerging Technologies' },
+      { id: 'computer-vision', name: 'Computer Vision' },
+      { id: 'reinforcement-learning', name: 'Reinforcement Learning' },
+      { id: 'mlops', name: 'MLOps' },
     ],
   },
   {
-    id: 'research',
-    title: 'Research',
-    icon: <Presentation size={24} />,
+    id: 'programming',
+    title: 'Programming & Frameworks',
+    icon: <Code size={24} />,
+    variant: 'web',
+    skills: [
+      { id: 'python', name: 'Python' },
+      { id: 'tensorflow', name: 'TensorFlow' },
+      { id: 'pytorch', name: 'PyTorch' },
+      { id: 'scikit-learn', name: 'Scikit-learn' },
+      { id: 'huggingface', name: 'Hugging Face' },
+      { id: 'fastapi', name: 'FastAPI' },
+    ],
+  },
+  {
+    id: 'data-tools',
+    title: 'Data & Cloud Platforms',
+    icon: <Database size={24} />,
     variant: 'tools',
     skills: [
-      { id: 'data-analysis', name: 'Data Analysis' },
-      { id: 'fact-checking', name: 'Fact Checking' },
-      { id: 'source-verification', name: 'Source Verification' },
-      { id: 'academic-research', name: 'Academic Research' },
-      { id: 'trend-analysis', name: 'Trend Analysis' },
+      { id: 'aws', name: 'AWS SageMaker' },
+      { id: 'gcp', name: 'Google Cloud AI' },
+      { id: 'azure', name: 'Azure ML' },
+      { id: 'docker', name: 'Docker' },
+      { id: 'kubernetes', name: 'Kubernetes' },
+      { id: 'spark', name: 'Apache Spark' },
     ],
   },
   {
-    id: 'communication',
-    title: 'Communication',
-    icon: <MessageSquare size={24} />,
-    variant: 'soft',
+    id: 'specializations',
+    title: 'AI Specializations',
+    icon: <Zap size={24} />,
+    variant: 'design',
     skills: [
-      { id: 'interviewing', name: 'Expert Interviewing' },
-      { id: 'public-speaking', name: 'Public Speaking' },
-      { id: 'storytelling', name: 'Storytelling' },
-      { id: 'technical-translation', name: 'Technical Translation' },
-      { id: 'audience-engagement', name: 'Audience Engagement' },
+      { id: 'llm', name: 'Large Language Models' },
+      { id: 'generative-ai', name: 'Generative AI' },
+      { id: 'ai-strategy', name: 'AI Strategy' },
+      { id: 'model-optimization', name: 'Model Optimization' },
+      { id: 'ai-ethics', name: 'AI Ethics' },
+      { id: 'ai-consulting', name: 'AI Consulting' },
     ],
   },
 ];

@@ -61,7 +61,7 @@ const Contact: React.FC = () => {
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: isMobile ? 0.3 : 0.6, delay: 0.1 }}
           >
-            I'm always open to discussing new projects, creative ideas, or opportunities to be part of something great. Feel free to reach out through any of these channels!
+            Ready to explore AI solutions for your business? I'm always excited to discuss new projects, AI strategy, or opportunities to collaborate on innovative AI implementations. Let's connect!
           </motion.p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-16 md:mb-20">
@@ -78,7 +78,7 @@ const Contact: React.FC = () => {
             <div className="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-accent-500/5 rounded-2xl" />
             <div className="relative">
               <h3 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center bg-gradient-to-r from-primary-500 to-accent-500 bg-clip-text text-transparent">
-                Ready to bring your ideas to life?
+                Ready to harness the power of AI?
               </h3>
               <ContactForm />
             </div>

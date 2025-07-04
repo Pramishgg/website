@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-scroll';
-import { ArrowRight, Eye } from 'lucide-react';
+import { ArrowRight, Brain } from 'lucide-react';
 import Button from './ui/Button';
 import BlurText from './ui/BlurText';
 
@@ -53,7 +53,7 @@ const Hero: React.FC = () => {
               direction="top"
             />
             <BlurText
-              text="An AI-focused journalist exploring the intersection of artificial intelligence. I specialize in investigating emerging AI trends, ethical implications, and their impact on society."
+              text="An AI generalist passionate about developing intelligent solutions across multiple domains. I specialize in machine learning, deep learning, and AI strategy to help businesses harness the power of artificial intelligence."
               className="text-base sm:text-lg lg:text-xl text-gray-700 mb-6 md:mb-8"
               delay={80}
               animateBy="words"
@@ -67,8 +67,8 @@ const Hero: React.FC = () => {
                 primary
                 className="w-full sm:w-auto flex items-center justify-center gap-2 text-base px-6 py-3"
               >
-                <span>Read My Articles</span>
-                <Eye size={18} />
+                <span>View My Work</span>
+                <Brain size={18} />
               </Button>
               
               <Link

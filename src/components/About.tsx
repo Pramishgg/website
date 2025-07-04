@@ -54,21 +54,21 @@ const About: React.FC = () => {
             className="mb-4 md:mb-6 text-lg md:text-xl lg:text-2xl leading-relaxed"
             variants={itemVariants}
           >
-            Hello! I'm <span className="gradient-text font-bold">Pramish</span>, an AI-focused journalist with a passion for uncovering and analyzing the latest developments in artificial intelligence and their impact on journalism, media, and society at large.
+            Hello! I'm <span className="gradient-text font-bold">Pramish</span>, an AI generalist with a passion for exploring and implementing artificial intelligence solutions across diverse domains and industries.
           </motion.p>
           
           <motion.p 
             className="mb-4 md:mb-6 text-lg md:text-xl lg:text-2xl leading-relaxed"
             variants={itemVariants}
           >
-            My work focuses on investigating emerging AI technologies, exploring ethical considerations in AI development, and examining how artificial intelligence is reshaping the media landscape. I combine deep technical understanding with clear, accessible writing to make complex AI topics understandable to diverse audiences.
+            My expertise spans machine learning, natural language processing, computer vision, and AI strategy. I specialize in bridging the gap between cutting-edge AI research and practical business applications, helping organizations leverage AI to solve complex problems and drive innovation.
           </motion.p>
           
           <motion.p 
             className="text-lg md:text-xl lg:text-2xl leading-relaxed"
             variants={itemVariants}
           >
-            I contribute to leading technology publications and maintain a dedicated platform for in-depth AI journalism. Let's connect and explore the fascinating world of artificial intelligence together!
+            From developing custom AI models to consulting on AI implementation strategies, I'm passionate about making artificial intelligence accessible and impactful. Let's collaborate to bring AI solutions to life!
           </motion.p>
         </motion.div>
       </div>
