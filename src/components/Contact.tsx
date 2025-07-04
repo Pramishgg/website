@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import SectionTitle from './ui/SectionTitle';
 import ContactInfo from './contact/ContactInfo';
-import ContactForm from './contact/ContactForm';
 
 const Contact: React.FC = () => {
   const isMobile = window.innerWidth < 768;
@@ -64,21 +63,9 @@ const Contact: React.FC = () => {
             Ready to explore AI solutions for your business? I'm always excited to discuss new projects, AI strategy, or opportunities to collaborate on innovative AI implementations. Let's connect!
           </motion.p>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-16 md:mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             <ContactInfo />
           </div>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: isMobile ? 0.3 : 0.6 }}
-            className="max-w-3xl mx-auto bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 lg:p-12 relative gpu-accelerated"
-          >
-            <div className="relative">
-              <ContactForm />
-            </div>
-          </motion.div>
         </div>
       </div>
     </section>
