@@ -1,224 +1,192 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Send } from 'lucide-react';
-import Button from '../ui/Button';
-import { insertContactSubmission } from '../../lib/supabase';
+import { Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { Button } from '../ui/Button';
+import { supabase } from '../../lib/supabase';
 
-const ContactForm: React.FC = () => {
-  const [formData, setFormData] = useState({
+interface FormData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+interface FormStatus {
+  type: 'idle' | 'loading' | 'success' | 'error';
+  message?: string;
+}
+
+export function ContactForm() {
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     subject: '',
     message: '',
   });
   
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formStatus, setFormStatus] = useState<null | 'success' | 'error'>(null);
-  
+  const [status, setStatus] = useState<FormStatus>({ type: 'idle' });
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    
+    setStatus({ type: 'loading' });
+
     try {
-      // Store in database first - this is the primary action
-      await insertContactSubmission(formData);
-      
-      // Try to send email notification, but don't fail if it doesn't work
-      try {
-        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-        const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-        
-        if (supabaseUrl && supabaseAnonKey) {
-          // Add timeout and better error handling for the fetch request
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
-          
-          try {
-            const response = await fetch(`${supabaseUrl}/functions/v1/send-email`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${supabaseAnonKey}`,
-              },
-              body: JSON.stringify(formData),
-              signal: controller.signal,
-            });
+      // Ensure we're using the anon key for public submissions
+      const { data, error } = await supabase
+        .from('contact_submissions')
+        .insert([{
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          subject: formData.subject.trim(),
+          message: formData.message.trim(),
+        }])
+        .select();
 
-            clearTimeout(timeoutId);
-
-            if (!response.ok) {
-              const errorBody = await response.json();
-              console.warn(`Email notification failed with status ${response.status}: ${errorBody.error || response.statusText}. Contact submission was saved successfully.`);
-              // Optionally: set a specific form status for email failure
-              // setFormStatus('email_error');
-            }
-          } catch (fetchError) {
-            clearTimeout(timeoutId);
-            if (fetchError instanceof Error) {
-              if (fetchError.name === 'AbortError') {
-                console.warn('Email notification timed out, but contact submission was saved successfully');
-              } else {
-                console.warn('Email notification failed during fetch, but contact submission was saved successfully:', fetchError.message);
-              }
-            } else {
-              console.warn('Email notification failed with unknown fetch error, but contact submission was saved successfully');
-            }
-          }
-        } else {
-          console.warn('Supabase environment variables not configured for email notifications. Contact submission was saved successfully.');
-        }
-      } catch (emailError) {
-        // Email notification failed, but that's okay - the main submission succeeded
-        console.warn('Email notification failed, but contact submission was saved successfully:', emailError instanceof Error ? emailError.message : emailError);
+      if (error) {
+        console.error('Supabase error:', error);
+        throw new Error(error.message);
       }
 
-      // Form submission was successful (data saved to database)
-      setFormStatus('success');
+      setStatus({ 
+        type: 'success', 
+        message: 'Thank you for your message! I\'ll get back to you soon.' 
+      });
+      
+      // Reset form
       setFormData({
         name: '',
         email: '',
         subject: '',
         message: '',
       });
-      
-      setTimeout(() => {
-        setFormStatus(null);
-      }, 5000);
+
     } catch (error) {
       console.error('Error submitting form:', error);
-      setFormStatus('error');
-      setTimeout(() => {
-        setFormStatus(null);
-      }, 5000);
-    } finally {
-      setIsSubmitting(false);
+      setStatus({ 
+        type: 'error', 
+        message: 'Failed to send message. Please try again or contact me directly.' 
+      });
     }
   };
-  
+
+  const isLoading = status.type === 'loading';
+  const isFormValid = formData.name.trim() && 
+                     formData.email.trim() && 
+                     formData.subject.trim() && 
+                     formData.message.trim();
+
   return (
-    <form 
-      onSubmit={handleSubmit}
-      className="space-y-4 md:space-y-6"
-    >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+    <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+              Name *
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              disabled={isLoading}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              placeholder="Your full name"
+            />
+          </div>
+          
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              Email *
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              disabled={isLoading}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              placeholder="your.email@example.com"
+            />
+          </div>
+        </div>
+
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-            Full Name
+          <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+            Subject *
           </label>
           <input
             type="text"
-            id="name"
-            name="name"
-            value={formData.name}
+            id="subject"
+            name="subject"
+            value={formData.subject}
             onChange={handleChange}
             required
-            className="w-full px-3 md:px-4 py-2 md:py-3 bg-white/50 backdrop-blur-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-300 focus:border-primary-500 outline-none transition-all duration-300 touch-optimized"
-            placeholder="John Doe"
+            disabled={isLoading}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            placeholder="What's this about?"
           />
         </div>
-        
+
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-            Email Address
+          <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+            Message *
           </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
+          <textarea
+            id="message"
+            name="message"
+            value={formData.message}
             onChange={handleChange}
             required
-            className="w-full px-3 md:px-4 py-2 md:py-3 bg-white/50 backdrop-blur-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-300 focus:border-primary-500 outline-none transition-all duration-300 touch-optimized"
-            placeholder="you@example.com"
+            disabled={isLoading}
+            rows={6}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none disabled:opacity-50 disabled:cursor-not-allowed"
+            placeholder="Tell me about your project, ideas, or just say hello!"
           />
         </div>
-      </div>
-      
-      <div>
-        <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
-          Subject
-        </label>
-        <input
-          type="text"
-          id="subject"
-          name="subject"
-          value={formData.subject}
-          onChange={handleChange}
-          required
-          className="w-full px-3 md:px-4 py-2 md:py-3 bg-white/50 backdrop-blur-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-300 focus:border-primary-500 outline-none transition-all duration-300 touch-optimized"
-          placeholder="Project Inquiry"
-        />
-      </div>
-      
-      <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-          Message
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          value={formData.message}
-          onChange={handleChange}
-          required
-          rows={4}
-          className="w-full px-3 md:px-4 py-2 md:py-3 bg-white/50 backdrop-blur-sm border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-300 focus:border-primary-500 outline-none transition-all duration-300 resize-none touch-optimized"
-          placeholder="Your detailed message here..."
-        ></textarea>
-      </div>
-      
-      <div>
+
+        {status.type !== 'idle' && (
+          <div className={`p-4 rounded-lg flex items-center gap-3 ${
+            status.type === 'success' 
+              ? 'bg-green-50 text-green-800 border border-green-200' 
+              : status.type === 'error'
+              ? 'bg-red-50 text-red-800 border border-red-200'
+              : 'bg-blue-50 text-blue-800 border border-blue-200'
+          }`}>
+            {status.type === 'success' && <CheckCircle className="w-5 h-5 flex-shrink-0" />}
+            {status.type === 'error' && <AlertCircle className="w-5 h-5 flex-shrink-0" />}
+            {status.type === 'loading' && (
+              <div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin flex-shrink-0" />
+            )}
+            <span className="text-sm font-medium">{status.message || 'Sending message...'}</span>
+          </div>
+        )}
+
         <Button
           type="submit"
-          primary
-          className="w-full flex items-center justify-center gap-2 py-3 md:py-4"
-          onClick={() => {}}
+          disabled={!isFormValid || isLoading}
+          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isSubmitting ? (
+          {isLoading ? (
             <>
-              <motion.div
-                className="w-4 h-4 md:w-5 md:h-5 border-2 border-white border-t-transparent rounded-full"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-              />
-              <span>Sending Message...</span>
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              Sending...
             </>
           ) : (
             <>
-              <span>Send Message</span>
-              <Send size={16} />
+              <Send className="w-4 h-4" />
+              Send Message
             </>
           )}
         </Button>
-        
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ 
-            opacity: formStatus ? 1 : 0,
-            y: formStatus ? 0 : 10
-          }}
-          transition={{ duration: 0.4 }}
-          className="mt-4"
-        >
-          {formStatus === 'success' && (
-            <p className="text-center text-green-600 bg-green-50 py-2 md:py-3 px-4 rounded-xl text-sm md:text-base">
-              Your message has been sent successfully! I'll get back to you soon.
-            </p>
-          )}
-          
-          {formStatus === 'error' && (
-            <p className="text-center text-red-600 bg-red-50 py-2 md:py-3 px-4 rounded-xl text-sm md:text-base">
-              There was an error sending your message. Please try again.
-            </p>
-          )}
-        </motion.div>
-      </div>
-    </form>
+      </form>
+    </div>
   );
-};
-
-export default ContactForm;
+}
