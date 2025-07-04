@@ -76,9 +76,6 @@ const Contact: React.FC = () => {
             className="max-w-3xl mx-auto bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 lg:p-12 relative gpu-accelerated"
           >
             <div className="relative">
-              <h3 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center bg-gradient-to-r from-primary-500 to-accent-500 bg-clip-text text-transparent">
-                Ready to harness the power of AI?
-              </h3>
               <ContactForm />
             </div>
           </motion.div>
